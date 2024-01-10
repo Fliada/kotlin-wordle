@@ -2,14 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Kotlinwordle" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorAccent">@color/yellow</item>
-        <item name="backgroundColor">@color/black</item>
-        <item name="background">@color/transparent</item>
-        <item name="logo">@drawable/dark_logo</item>
-        <item name="theme">@drawable/sun</item>
-        <item name="strokeColor">@color/grey</item>
-        <item name="colorButtonNormal">@color/white</item>
+        <item name="colorPrimary">@color/white</item>       //for menu
+        <item name="colorAccent">@color/yellow</item>       //for accent of menu
+        <item name="backgroundColor">@color/black</item>    //for text on keyboard color
+        <item name="background">@color/transparent</item>   //for background of buttons and settings in menu
+        <item name="logo">@drawable/dark_logo</item>        //logo
+        <item name="theme">@drawable/sun</item>             //for theme in settings
+        <item name="strokeColor">@color/grey</item>         //for stroke of theme in settings
+        <item name="colorButtonNormal">@color/white</item>  //for background of theme in settings
     </style>
 
     <style name="Theme.Kotlinwordle" parent="Base.Theme.Kotlinwordle" />
