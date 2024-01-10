@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/sampleFragment"
-        android:name="com.example.kotlin_wordle.SampleFragment"
+        android:name="com.example.kotlin_wordle.presenter.SampleFragment"
         android:label="SampleFragment" />
 </navigation>
