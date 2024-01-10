@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Kotlinwordle" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/dark_grey</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="backgroundColor">@color/grey</item>
+        <item name="background">@color/white</item>
+        <item name="logo">@drawable/light_logo</item>
+        <item name="theme">@drawable/moon_stars</item>
+        <item name="strokeColor">@color/dark_dark_grey</item>
+        <item name="colorButtonNormal">@color/grey</item>
+    </style>
+</resources>
