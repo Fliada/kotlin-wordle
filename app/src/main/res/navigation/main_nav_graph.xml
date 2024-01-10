@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/sampleFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/sampleFragment"
-        android:name="com.example.kotlin_wordle.presenter.SampleFragment"
-        android:label="SampleFragment" />
+        android:id="@+id/mainFragment"
+        android:name="com.example.kotlin_wordle.presenter.MainFragment"
+        android:label="MainFragment" />
 </navigation>
