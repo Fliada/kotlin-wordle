@@ -7,21 +7,22 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlin_wordle.databinding.ItemKeyboardKeyBinding
 
-class KeyboardKeyAdapter(private val keys: List<String>,
-                         private val onItemClick: (Button) -> Unit
+class KeyboardKeyAdapter(
+    private val keys: List<String>,
+    private val onItemClick: (Button) -> Unit,
+    private val rowPosition: Int
 ) : RecyclerView.Adapter<KeyboardKeyAdapter.KeyboardKeyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeyboardKeyViewHolder {
         val context = parent.context
         val layoutInflater = LayoutInflater.from(context)
         val binding = ItemKeyboardKeyBinding.inflate(layoutInflater, parent, false)
-        return KeyboardKeyViewHolder(binding, onItemClick)
+        return KeyboardKeyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: KeyboardKeyViewHolder, position: Int) {
-        Log.d("KeyboardKeyAdapter", "I'm here")
         val key = keys[position]
-        holder.bind(key)
+        holder.bind(key, onItemClick, rowPosition)
     }
 
     override fun getItemCount(): Int {
@@ -29,15 +30,16 @@ class KeyboardKeyAdapter(private val keys: List<String>,
     }
 
     class KeyboardKeyViewHolder(
-        private val binding: ItemKeyboardKeyBinding,
-        private val onItemClick: (Button) -> Unit,
+        private val binding: ItemKeyboardKeyBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(key: String) = with(binding) {
-            val button = itemView as Button
-            button.text = key
 
-            root.setOnClickListener {
+        fun bind(key: String, onItemClick: (Button) -> Unit, rowPosition: Int) {
+            val button = binding.keyItem
+            button.text = key
+            button.setOnClickListener {
                 onItemClick(button)
+                // Дополнительная логика для изменения соответствующего EditText в RecyclerView
+                // Ваш код здесь
             }
         }
     }

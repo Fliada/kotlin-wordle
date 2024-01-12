@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -42,6 +43,14 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
         val recyclerView: RecyclerView = binding.rowKeyboardRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
+
+        //Letters
+        val rowCount = 6 // Количество строк
+        val columnCount = 5 // Количество столбцов
+
+        val lettersRecyclerView: RecyclerView = binding.lettersRecyclerView
+        lettersRecyclerView.layoutManager = GridLayoutManager(requireContext(), columnCount)
+        lettersRecyclerView.adapter = LettersAdapter(requireContext(), rowCount, columnCount)
     }
 
 
@@ -50,9 +59,19 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
         super.onAttach(context)
     }
 
-    override fun onLetterClickListener(entry : Button) {
+    override fun onLetterClickListener(entry: Button) {
         val clickedKey = entry.text.toString()
-        // Обработайте нажатие кнопки, например, добавьте текст в ваш EditText
-        binding.editText.append(clickedKey)
+        val lettersAdapter = binding.lettersRecyclerView.adapter as? LettersAdapter
+
+        if (lettersAdapter != null) {
+            val activeRow = lettersAdapter.activeRow
+            val activeColumn = lettersAdapter.activeColumn
+
+            // Обновляем букву в текущей активной ячейке
+            lettersAdapter.updateLetter(activeRow, activeColumn, clickedKey)
+
+            // Перемещаем фокус на следующую ячейку в строке
+            lettersAdapter.moveToNextCell(activeRow, activeColumn)
+        }
     }
 }

@@ -15,11 +15,9 @@ import com.example.kotlin_wordle.databinding.RowKeyboardItemBinding
 class KeyboardAdapter(
     private val rows: List<List<String>>,
     private val onItemClick: (Button) -> Unit
-
 ) : RecyclerView.Adapter<KeyboardAdapter.KeyboardRowViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeyboardRowViewHolder {
-        Log.d("KeyboardAdapter", rows.size.toString())
         val context = parent.context
         val layoutInflater = LayoutInflater.from(context)
         val binding = RowKeyboardItemBinding.inflate(layoutInflater, parent, false)
@@ -27,9 +25,8 @@ class KeyboardAdapter(
     }
 
     override fun onBindViewHolder(holder: KeyboardRowViewHolder, position: Int) {
-        Log.d("KeyboardAdapter", "I'm here")
-        val keys = rows[position] // Получаем список клавиш для текущего ряда
-        val keyAdapter = KeyboardKeyAdapter(keys, onItemClick)
+        val keys = rows[position]
+        val keyAdapter = KeyboardKeyAdapter(keys, onItemClick, position)
         holder.bind(keyAdapter)
     }
 
@@ -43,8 +40,7 @@ class KeyboardAdapter(
 
         fun bind(adapter: RecyclerView.Adapter<KeyboardKeyAdapter.KeyboardKeyViewHolder>) {
             val recyclerView: RecyclerView = binding.keyboardRecyclerView
-            recyclerView.layoutManager = GridLayoutManager(itemView.context, adapter.itemCount)
-            recyclerView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            recyclerView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = adapter
         }
     }

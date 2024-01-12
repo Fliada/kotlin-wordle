@@ -4,7 +4,6 @@
     android:id="@+id/keyboardRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/editText"
     tools:listitem="@layout/item_keyboard_key"
     android:layout_gravity="center"
     android:foregroundGravity="center"
