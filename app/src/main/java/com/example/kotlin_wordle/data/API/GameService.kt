@@ -6,6 +6,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface GameService {
-    @POST("word/")
-    suspend fun getWord(@Query("number") number: Int): Response<String>
+    @GET("word")
+    suspend fun getWord(@Query("length") number: Int): Response<List<String>>
 }

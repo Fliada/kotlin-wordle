@@ -35,24 +35,25 @@
         app:layout_constraintVertical_bias="0.044" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoView"
         android:gravity="center"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/logoView">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lettersRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="439dp"
+            android:layout_height="417dp"
             android:layout_above="@+id/rowKeyboardRecyclerView"
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:layout_marginTop="80dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="12dp"
             android:foregroundGravity="center"
             tools:itemCount="3"
             tools:listitem="@layout/letter_item" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rowKeyboardRecyclerView"
@@ -62,13 +63,37 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginStart="-2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
             android:foregroundGravity="center"
             tools:itemCount="3"
             tools:listitem="@layout/row_keyboard_item" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/yellow"
+        android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextButton"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/green"
+        android:text="Check"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/deleteButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
