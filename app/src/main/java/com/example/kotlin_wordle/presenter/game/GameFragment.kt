@@ -51,6 +51,14 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
         val lettersRecyclerView: RecyclerView = binding.lettersRecyclerView
         lettersRecyclerView.layoutManager = GridLayoutManager(requireContext(), columnCount)
         lettersRecyclerView.adapter = LettersAdapter(requireContext(), rowCount, columnCount)
+
+        // Установка случайного слова при старте фрагмента
+        setWord(columnCount)
+
+        viewModel.wordLiveData.observe(viewLifecycleOwner) { word ->
+            // Обновляем интерфейс с установленным словом
+            // Например, можно использовать word для установки в нужное место в интерфейсе
+        }
     }
 
 
@@ -73,5 +81,11 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
             // Перемещаем фокус на следующую ячейку в строке
             lettersAdapter.moveToNextCell(activeRow, activeColumn)
         }
+    }
+
+    private fun setWord(wordLength: Int) {
+        // Здесь вы должны вызвать метод setWord вашего GameViewModel,
+        // чтобы получить случайное слово заданной длины и установить его в адаптер
+        viewModel.setWord(wordLength)
     }
 }

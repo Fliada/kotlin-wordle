@@ -18,6 +18,12 @@ class LettersAdapter(private val context: Context, private val rowCount: Int, pr
 
     public var activeRow = 0
     public var activeColumn = 0
+    private var wordLetters: List<String> = emptyList()
+
+    fun setWordLetters(letters: List<String>) {
+        wordLetters = letters
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LettersViewHolder {
         val context = parent.context
@@ -33,6 +39,11 @@ class LettersAdapter(private val context: Context, private val rowCount: Int, pr
         holder.textView.text = letters[row][col]
         holder.textView.isEnabled = row == activeRow
         holder.textView.isFocusable = row == activeRow && col == activeColumn
+
+        // Отображение букв слова
+        if (wordLetters.isNotEmpty() && row == activeRow) {
+            holder.textView.text = wordLetters.getOrNull(col) ?: ""
+        }
 
         holder.textView.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
