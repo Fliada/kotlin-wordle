@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,10 +71,17 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
 
         // Установка слушателей на кнопки
         binding.deleteButton.setOnClickListener {
-            lettersAdapter.deleteLetter()
+            if (!viewModel.isGameFinished) {
+                lettersAdapter.deleteLetter()
+            }
         }
 
         binding.nextButton.setOnClickListener {
+
+            if (viewModel.isGameFinished) {
+                return@setOnClickListener
+            }
+
             // Проверяем, заполнена ли строка, прежде чем переходить к следующей строке
             if (!lettersAdapter.isRowFilled(lettersAdapter.activeRow)) {
                 // Ваш код для обработки случая, когда строка не заполнена
@@ -87,6 +95,10 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
                 viewModel.checkWordMatch(activeRow)
             }
         }
+
+        binding.nav.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 
@@ -96,6 +108,11 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
     }
 
     override fun onLetterClickListener(entry: Button) {
+
+        if (viewModel.isGameFinished) {
+            return
+        }
+
         val clickedKey = entry.text.toString()
 
         if (lettersAdapter != null) {

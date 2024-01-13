@@ -12,10 +12,17 @@
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.kotlin_wordle.presenter.game.GameFragment"
         android:label="fragment_game"
         tools:layout="@layout/fragment_game" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.kotlin_wordle.presenter.menu.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

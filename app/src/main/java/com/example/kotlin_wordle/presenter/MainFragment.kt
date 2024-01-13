@@ -2,6 +2,7 @@ package com.example.kotlin_wordle.presenter
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import com.example.kotlin_wordle.R
 import com.example.kotlin_wordle.databinding.FragmentMainBinding
 import com.example.kotlin_wordle.di.ViewModelFactory
 import com.example.kotlin_wordle.di.appComponent
+import com.example.kotlin_wordle.presenter.menu.SettingsFragment
 import javax.inject.Inject
 
 class MainFragment : Fragment(R.layout.fragment_main), SettingsListListener {
@@ -29,6 +31,14 @@ class MainFragment : Fragment(R.layout.fragment_main), SettingsListListener {
         binding.start.setOnClickListener {
             onStartClickListener()
         }
+
+        binding.settings.setOnClickListener {
+            onSettingsClickListener()
+        }
+
+        binding.exit.setOnClickListener {
+            onExitClickListener()
+        }
     }
 
 
@@ -43,7 +53,23 @@ class MainFragment : Fragment(R.layout.fragment_main), SettingsListListener {
     }
 
     override fun onSettingsClickListener() {
-        TODO("Not yet implemented")
+// Создайте экземпляр SettingsFragment
+        val settingsFragment = SettingsFragment()
+
+// Получите менеджер фрагментов
+        val fragmentManager = childFragmentManager
+
+// Начните транзакцию фрагментов
+        val transaction = fragmentManager.beginTransaction()
+
+// Замените фрагмент контейнера
+        transaction.replace(R.id.fragmentContainer, settingsFragment)
+
+// Добавьте транзакцию в стек возврата (если нужно)
+        transaction.addToBackStack(null)
+
+// Примените транзакцию
+        transaction.commit()
     }
 
     override fun onExitClickListener() {

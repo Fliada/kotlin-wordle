@@ -19,6 +19,9 @@ class GameViewModel @Inject constructor (
     val wordLiveData: LiveData<String> get() = _wordLiveData
     // Переменная для хранения ссылки на LettersAdapter
     private var lettersAdapter: LettersAdapter? = null
+    private val _gameFinishedLiveData = MutableLiveData<Unit>()
+    val gameFinishedLiveData: LiveData<Unit> get() = _gameFinishedLiveData
+    var isGameFinished : Boolean = false
 
     // Метод для установки слова
     fun setWord(number: Int) {
@@ -61,7 +64,11 @@ class GameViewModel @Inject constructor (
                     lettersAdapter?.updateCellAppearance(row, i, isCorrectLetter, true, isUserLetter)
                 }
 
-                // Ваш дополнительный код, если необходимо выполнить какие-либо действия при совпадении слов
+                // Проверка завершения игры
+                if (isWordMatched) {
+                    isGameFinished = true
+                    _gameFinishedLiveData.postValue(Unit)
+                }
             }
         }
     }
