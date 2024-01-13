@@ -8,4 +8,7 @@ import retrofit2.http.Query
 interface GameService {
     @GET("word")
     suspend fun getWord(@Query("length") number: Int): Response<List<String>>
+
+    @GET("all")
+    suspend fun getAllWords(): Response<List<String>>
 }

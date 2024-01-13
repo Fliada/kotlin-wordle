@@ -1,24 +1,36 @@
 package com.example.kotlin_wordle.presenter.menu
 
+import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SettingsViewModel : ViewModel() {
-    private var selectedTheme: String = "Light"
-    private var selectedDifficulty: String = "5"
+class SettingsViewModel (
+    private val preferences: SharedPreferences
+) : ViewModel() {
+    private val _selectedDifficulty = MutableLiveData<String>()
+    val selectedDifficulty: LiveData<String>
+        get() = _selectedDifficulty
 
-    fun setTheme(theme: String) {
-        selectedTheme = theme
+    init {
+        // Загрузите сохраненное значение difficulty при создании ViewModel
+        _selectedDifficulty.value = preferences.getString(KEY_DIFFICULTY, "5")
     }
 
     fun setDifficulty(difficulty: String) {
-        selectedDifficulty = difficulty
+        // Сохраните выбранное значение difficulty
+        preferences.edit().putString(KEY_DIFFICULTY, difficulty).apply()
+
+        // Обновите LiveData для уведомления наблюдателей (например, фрагментов)
+        _selectedDifficulty.value = difficulty
     }
 
-    fun getSelectedTheme(): String {
-        return selectedTheme
+    fun getDifficulty(): String {
+        // Возвращает текущее значение difficulty
+        return selectedDifficulty.value ?: "5"
     }
 
-    fun getSelectedDifficulty(): String {
-        return selectedDifficulty
+    companion object {
+        private const val KEY_DIFFICULTY = "difficulty"
     }
 }

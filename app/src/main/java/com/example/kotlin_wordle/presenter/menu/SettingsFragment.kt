@@ -1,5 +1,6 @@
 package com.example.kotlin_wordle.presenter.menu
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,7 +29,7 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = SettingsViewModel()
+        viewModel = SettingsViewModel(requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE))
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
 
@@ -72,11 +73,12 @@ class SettingsFragment : Fragment() {
             val selectedDifficulty = difficultySpinner.selectedItem.toString()
 
             // Передайте значения во ViewModel
-            viewModel.setTheme(selectedTheme)
             viewModel.setDifficulty(selectedDifficulty)
 
             // Закройте фрагмент
             fragmentManager?.popBackStack()
         }
     }
+
+
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kotlin_wordle.domain.GetAllWordsUseCase
 import com.example.kotlin_wordle.domain.GetWordUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 class GameViewModel @Inject constructor (
     private val getWordUseCase: GetWordUseCase,
+    private val getAllWordsUseCase: GetAllWordsUseCase,
 )
     : ViewModel()  {
 
@@ -22,6 +24,19 @@ class GameViewModel @Inject constructor (
     private val _gameFinishedLiveData = MutableLiveData<Unit>()
     val gameFinishedLiveData: LiveData<Unit> get() = _gameFinishedLiveData
     var isGameFinished : Boolean = false
+
+    private val _allWordsData = MutableLiveData<List<String>?>()
+    val allWordsData: MutableLiveData<List<String>?> get() = _allWordsData
+
+    fun getAllWords() {
+        viewModelScope.launch {
+            val allWordsResult = getAllWordsUseCase()
+            if (allWordsResult.isSuccess) {
+                val allWords = allWordsResult.getOrNull()
+                _allWordsData.postValue(allWords as List<String>?)
+            }
+        }
+    }
 
     // Метод для установки слова
     fun setWord(number: Int) {
@@ -54,6 +69,12 @@ class GameViewModel @Inject constructor (
         if (word != null) {
             val enteredWord = lettersAdapter?.getEnteredWord()
             if (enteredWord != null) {
+
+                if (allWordsData.value != null && !(allWordsData.value!!.contains(enteredWord.joinToString("").toLowerCase()))) {
+                    Log.d("WordMatch", allWordsData.value!!.size.toString())
+                    throw Exception()
+                }
+
                 val isWordMatched = enteredWord.joinToString("") == word.toUpperCase()
                 Log.d("WordMatch", "Entered Word: ${enteredWord.joinToString("")}, and Actual Word: ${word.toUpperCase()}, Matched: $isWordMatched")
 

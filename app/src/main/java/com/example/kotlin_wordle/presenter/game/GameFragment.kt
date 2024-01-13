@@ -59,6 +59,8 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
         // Установка случайного слова при старте фрагмента
         setWord(columnCount)
 
+        viewModel.getAllWords()
+
         // Привязка LettersAdapter к GameViewModel
         viewModel.bindLettersAdapter(lettersAdapter)
 
@@ -90,9 +92,15 @@ class GameFragment : Fragment(R.layout.fragment_game), LetterListListener {
                 // Переходим к следующей строке и проверяем слово
                 val activeRow = lettersAdapter.activeRow
                 val activeColumn = lettersAdapter.activeColumn
-                lettersAdapter.enableNextRow()
-                lettersAdapter.moveToNextCell(activeRow, activeColumn)
-                viewModel.checkWordMatch(activeRow)
+
+                try {
+                    viewModel.checkWordMatch(activeRow)
+                    lettersAdapter.enableNextRow()
+                    lettersAdapter.moveToNextCell(activeRow, activeColumn)
+                }
+                catch (e: Exception) {
+                    Toast.makeText(requireContext(), "There is no such word!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

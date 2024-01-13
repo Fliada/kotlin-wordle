@@ -25,4 +25,19 @@ class GameRepositoryImpl @Inject constructor(
             }
         )
     }
+
+    override suspend fun getAllWords(): Result<List<String?>?> {
+        kotlin.runCatching {
+            service.getAllWords()
+        }.fold(
+            onSuccess = {
+                return if (it.isSuccessful)
+                    Result.success(it.body())
+                else Result.failure(HttpException(it))
+            },
+            onFailure = {
+                return Result.failure(it)
+            }
+        )
+    }
 }
